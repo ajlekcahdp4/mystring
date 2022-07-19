@@ -6,13 +6,13 @@ set (MYSTRING_RESOURCES
     main.cc
 )
 
+
 add_executable (mystring ${MYSTRING_RESOURCES})
 
-
 find_package(GTest)
+include(GoogleTest)
 enable_testing()
 
-find_program(BASH_PROGRAM bash)
-if(BASH_PROGRAM)
-    add_test(NAME TestLFU.testEndToEnd COMMAND ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/test.sh "$<TARGET_FILE:lfucpp>" ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
+target_include_directories(mystring PRIVATE ${GTEST_INCLUDE_DIRECTORIES})
+target_link_libraries(mystring ${GTEST_BOTH_LIBRARIES})
+gtest_discover_tests(mystring)
