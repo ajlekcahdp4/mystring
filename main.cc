@@ -5,6 +5,8 @@
 
 #include "mystring.hpp"
 
+using namespace mystring;
+
 TEST (TestMyString, TestInit)
 {
     int res           = 0;
@@ -26,6 +28,30 @@ TEST (TestMyString, TestInit)
 
     res = std::strncmp (cstr2, str2.c_str (), cstr_len_2);
     ASSERT_EQ (res, 0);
+}
+
+TEST (TestMyString, TestOperatorEqEq)
+{
+    int res = 0;
+    mystring::mystring str1 ("Hello, ");
+    mystring::mystring str2 ("world!");
+    mystring::mystring str3 ("world! ");
+    mystring::mystring str4 ("");
+
+    res = (str1 == str1);
+    ASSERT_EQ (res, 0);
+
+    res = (str1 == str2);
+    ASSERT_NE (res, 0);
+
+    res = (str1 == str3);
+    ASSERT_NE (res, 0);
+
+    res = (str2 == str3);
+    ASSERT_EQ (res, -1);
+
+    res = (str1 == str4);
+    ASSERT_GT (res, 0);
 }
 
 int main (int argc, char *argv[])
