@@ -54,6 +54,22 @@ TEST (TestMyString, TestOperatorEqEq)
     ASSERT_GT (res, 0);
 }
 
+TEST (TestMyString, TestCopyCtor)
+{
+    int res = 0;
+    mystring::mystring str1 ("Hello, world!");
+    mystring::mystring str2 (str1);
+
+    res = (str1 == str2);
+    ASSERT_EQ (res, 0);
+
+    mystring::mystring str3 ("");
+    mystring::mystring str4 (str3);
+
+    res = (str3 == str4);
+    ASSERT_EQ (res, 0);
+}
+
 int main (int argc, char *argv[])
 {
     ::testing::InitGoogleTest (&argc, argv);

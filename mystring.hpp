@@ -21,6 +21,13 @@ class mystring {
         std::strncpy (data_, data, size_);
     }
 
+    mystring (const mystring &deststr) : size_ (deststr.size ())
+    {
+        capacity_ = power_two::nearest_from_above_power_of_two (size_);
+        data_     = new char[capacity_];
+        std::strncpy (data_, deststr.c_str (), size_);
+    }
+
     virtual ~mystring () { delete[] data_; }
 
     size_t size () const { return size_; }
