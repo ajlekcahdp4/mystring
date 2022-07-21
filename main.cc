@@ -80,6 +80,83 @@ TEST (TestMyString, TestOperatorEqEq)
     ASSERT_FALSE (res);
 }
 
+TEST (TestMyString, TestInequalities)
+{
+    bool res = false;
+    mystring::mystring str1 ("Hello, ");
+    mystring::mystring str2 ("world!");
+    mystring::mystring str3 ("world! ");
+    mystring::mystring str4 ("");
+    mystring::mystring str5 ("bb");
+    mystring::mystring str6 ("aaaa");
+    // operator<
+    res = (str2 < str3);
+    ASSERT_TRUE (res);
+
+    res = (str3 < str2);
+    ASSERT_FALSE (res);
+
+    res = (str1 < str3);
+    ASSERT_TRUE (res);
+
+    res = (str6 < str5);
+    ASSERT_TRUE (res);
+
+    // operator>
+
+    res = (str2 > str3);
+    ASSERT_FALSE (res);
+
+    res = (str3 > str2);
+    ASSERT_TRUE (res);
+
+    res = (str1 > str3);
+    ASSERT_FALSE (res);
+
+    res = (str5 > str6);
+    ASSERT_TRUE (res);
+
+    // operator<=
+
+    res = (str2 <= str3);
+    ASSERT_TRUE (res);
+
+    res = (str3 <= str2);
+    ASSERT_FALSE (res);
+
+    res = (str1 <= str3);
+    ASSERT_TRUE (res);
+
+    res = (str1 <= str1);
+    ASSERT_TRUE (res);
+
+    res = (str4 <= str4);
+    ASSERT_TRUE (res);
+
+    res = (str6 <= str5);
+    ASSERT_TRUE (res);
+
+    // operator>=
+
+    res = (str2 >= str3);
+    ASSERT_FALSE (res);
+
+    res = (str3 >= str2);
+    ASSERT_TRUE (res);
+
+    res = (str1 >= str3);
+    ASSERT_FALSE (res);
+
+    res = (str1 >= str1);
+    ASSERT_TRUE (res);
+
+    res = (str4 >= str4);
+    ASSERT_TRUE (res);
+
+    res = (str5 >= str6);
+    ASSERT_TRUE (res);
+}
+
 TEST (TestMyString, TestCopyCtor)
 {
     bool res = false;

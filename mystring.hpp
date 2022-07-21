@@ -58,10 +58,38 @@ class mystring {
 
 int strcmp (const mystring &str1, const mystring &str2)
 {
-    int diff = str1.size () - str2.size ();
-    return diff == 0 ? std::strncmp (str1.c_str (), str2.c_str (), str1.size ()) : diff;
+    int size_diff    = str1.size () - str2.size ();
+    int content_diff = std::strncmp (str1.c_str (), str2.c_str (), str1.size ());
+
+    if ( !content_diff )
+        return size_diff;
+    return content_diff;
 }
 
 bool operator== (const mystring &str1, const mystring &str2) { return !strcmp (str1, str2); }
+
+bool operator> (const mystring &str1, const mystring &str2)
+{
+    int res = strcmp (str1, str2);
+    return (res > 0);
+}
+
+bool operator>= (const mystring &str1, const mystring &str2)
+{
+    int res = strcmp (str1, str2);
+    return (res >= 0);
+}
+
+bool operator< (const mystring &str1, const mystring &str2)
+{
+    int res = strcmp (str1, str2);
+    return (res < 0);
+}
+
+bool operator<= (const mystring &str1, const mystring &str2)
+{
+    int res = strcmp (str1, str2);
+    return (res <= 0);
+}
 
 }   // namespace mystring
