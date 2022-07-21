@@ -12,8 +12,6 @@ class mystring {
     size_t size_;
     size_t capacity_;
 
-    size_t capacity () const { return capacity_; }
-
   public:
     mystring (const char *data)
     {
@@ -23,11 +21,11 @@ class mystring {
         std::strncpy (data_, data, size_);
     }
 
-    mystring (const mystring &deststr) : size_ (deststr.size ())
+    mystring (const mystring &deststr) : size_ (deststr.size_)
     {
         capacity_ = power_two::nearest_from_above_power_of_two (size_);
         data_     = new char[capacity_];
-        std::strncpy (data_, deststr.c_str (), size_);
+        std::strncpy (data_, deststr.data_, size_);
     }
 
     virtual ~mystring () { delete[] data_; }
@@ -38,10 +36,10 @@ class mystring {
 
     mystring operator= (const mystring &other)
     {
-        if ( other.size () + 1 >= capacity_ )
+        if ( other.size_ + 1 >= capacity_ )
         {
             delete[] data_;
-            capacity_ = other.capacity ();
+            capacity_ = other.capacity_;
             data_     = new char[capacity_];
         }
         else
@@ -50,8 +48,8 @@ class mystring {
                 data_[i] = '\0';
         }
 
-        size_ = other.size ();
-        std::strncpy (data_, other.c_str (), size_);
+        size_ = other.size_;
+        std::strncpy (data_, other.data_, size_);
         return *this;
     }
 };
