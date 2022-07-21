@@ -54,10 +54,12 @@ class mystring {
     }
 };
 
-long operator== (const mystring &str1, const mystring &str2)
+int strcmp (const mystring &str1, const mystring &str2)
 {
     int diff = str1.size () - str2.size ();
     return diff == 0 ? std::strncmp (str1.c_str (), str2.c_str (), str1.size ()) : diff;
 }
+
+bool operator== (const mystring &str1, const mystring &str2) { return !strcmp (str1, str2); }
 
 }   // namespace mystring

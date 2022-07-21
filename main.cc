@@ -30,7 +30,7 @@ TEST (TestMyString, TestInit)
     ASSERT_EQ (res, 0);
 }
 
-TEST (TestMyString, TestOperatorEqEq)
+TEST (TestMyString, TestStrCmp)
 {
     int res = 0;
     mystring::mystring str1 ("Hello, ");
@@ -38,52 +38,78 @@ TEST (TestMyString, TestOperatorEqEq)
     mystring::mystring str3 ("world! ");
     mystring::mystring str4 ("");
 
-    res = (str1 == str1);
+    res = mystring::strcmp (str1, str1);
     ASSERT_EQ (res, 0);
 
-    res = (str1 == str2);
+    res = mystring::strcmp (str1, str2);
     ASSERT_NE (res, 0);
 
-    res = (str1 == str3);
+    res = mystring::strcmp (str1, str3);
     ASSERT_NE (res, 0);
 
-    res = (str2 == str3);
+    res = mystring::strcmp (str2, str3);
     ASSERT_EQ (res, -1);
 
-    res = (str1 == str4);
+    res = mystring::strcmp (str1, str4);
     ASSERT_GT (res, 0);
+
+    res = mystring::strcmp (str4, str1);
+    ASSERT_LT (res, 0);
+}
+
+TEST (TestMyString, TestOperatorEqEq)
+{
+    bool res = false;
+    mystring::mystring str1 ("Hello, ");
+    mystring::mystring str2 ("world!");
+    mystring::mystring str3 ("world! ");
+    mystring::mystring str4 ("");
+
+    res = (str1 == str1);
+    ASSERT_TRUE (res);
+    res = (str1 == str2);
+    ASSERT_FALSE (res);
+
+    res = (str1 == str3);
+    ASSERT_FALSE (res);
+
+    res = (str2 == str3);
+    ASSERT_FALSE (res);
+
+    res = (str1 == str4);
+    ASSERT_FALSE (res);
 }
 
 TEST (TestMyString, TestCopyCtor)
 {
-    int res = 0;
+    bool res = false;
     mystring::mystring str1 ("Hello, world!");
     mystring::mystring str2 (str1);
 
     res = (str1 == str2);
-    ASSERT_EQ (res, 0);
+    ASSERT_TRUE (res);
 
     mystring::mystring str3 ("");
     mystring::mystring str4 (str3);
 
     res = (str3 == str4);
-    ASSERT_EQ (res, 0);
+    ASSERT_TRUE (res);
 }
 
 TEST (TestMyString, TestCopyAssiggnment)
 {
-    int res = 0;
+    bool res = false;
     mystring::mystring str1 ("Hello, world!");
     mystring::mystring str2 ("Other string");
 
     str2 = str1;
     res  = (str2 == str1);
-    ASSERT_EQ (res, 0);
+    ASSERT_TRUE (res);
 
     mystring::mystring str3 ("");
     str2 = str3;
     res  = (str2 == str3);
-    ASSERT_EQ (res, 0);
+    ASSERT_TRUE (res);
 }
 
 int main (int argc, char *argv[])
