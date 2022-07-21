@@ -6,11 +6,13 @@
 namespace mystring
 {
 
+using size_type = size_t;
+
 class mystring {
   private:
     char *data_;
-    size_t size_;
-    size_t capacity_;
+    size_type size_;
+    size_type capacity_;
 
   public:
     mystring (const char *data)
@@ -30,7 +32,7 @@ class mystring {
 
     virtual ~mystring () { delete[] data_; }
 
-    size_t size () const { return size_; }
+    size_type size () const { return size_; }
 
     char *c_str () const { return data_; }
 
