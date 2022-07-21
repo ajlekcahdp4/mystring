@@ -70,6 +70,22 @@ TEST (TestMyString, TestCopyCtor)
     ASSERT_EQ (res, 0);
 }
 
+TEST (TestMyString, TestCopyAssiggnment)
+{
+    int res = 0;
+    mystring::mystring str1 ("Hello, world!");
+    mystring::mystring str2 ("Other string");
+
+    str2 = str1;
+    res  = (str2 == str1);
+    ASSERT_EQ (res, 0);
+
+    mystring::mystring str3 ("");
+    str2 = str3;
+    res  = (str2 == str3);
+    ASSERT_EQ (res, 0);
+}
+
 int main (int argc, char *argv[])
 {
     ::testing::InitGoogleTest (&argc, argv);

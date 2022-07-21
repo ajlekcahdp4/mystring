@@ -12,6 +12,8 @@ class mystring {
     size_t size_;
     size_t capacity_;
 
+    size_t capacity () const { return capacity_; }
+
   public:
     mystring (const char *data)
     {
@@ -33,6 +35,25 @@ class mystring {
     size_t size () const { return size_; }
 
     char *c_str () const { return data_; }
+
+    mystring operator= (const mystring &other)
+    {
+        if ( other.size () + 1 >= capacity_ )
+        {
+            delete[] data_;
+            capacity_ = other.capacity ();
+            data_     = new char[capacity_];
+        }
+        else
+        {
+            for ( int i = 0; i < size_; i++ )
+                data_[i] = '\0';
+        }
+
+        size_ = other.size ();
+        std::strncpy (data_, other.c_str (), size_);
+        return *this;
+    }
 };
 
 long operator== (const mystring &str1, const mystring &str2)
