@@ -92,4 +92,6 @@ bool operator<= (const mystring &str1, const mystring &str2)
     return (res <= 0);
 }
 
+bool operator!= (const mystring &str1, const mystring str2) { return !(str1 == str2); }
+
 }   // namespace mystring

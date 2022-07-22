@@ -155,6 +155,20 @@ TEST (TestMyString, TestInequalities)
 
     res = (str5 >= str6);
     ASSERT_TRUE (res);
+
+    // operator!=
+
+    res = (str1 != str1);
+    ASSERT_FALSE (res);
+
+    res = (str1 != str2);
+    ASSERT_TRUE (res);
+
+    res = (str2 != str3);
+    ASSERT_TRUE (res);
+
+    res = (str1 != str4);
+    ASSERT_TRUE (res);
 }
 
 TEST (TestMyString, TestCopyCtor)
