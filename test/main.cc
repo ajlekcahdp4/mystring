@@ -171,6 +171,29 @@ TEST (TestMyString, TestInequalities)
     ASSERT_TRUE (res);
 }
 
+TEST (TestMyString, TestOperatorSqrBrackets)
+{
+    mystring::mystring str = "Hello, World!";
+
+    char &ref1 = str[0];
+    ASSERT_EQ (ref1, 'H');
+
+    char &ref2 = str[12];
+    ASSERT_EQ (ref2, '!');
+
+    char &ref3 = str[13];
+    ASSERT_EQ (ref3, '\0');
+
+    char &ref4 = str[-1];
+    ASSERT_EQ (ref4, '!');
+
+    char &ref5 = str[-13];
+    ASSERT_EQ (ref5, 'H');
+
+    str[0] = 'h';
+    ASSERT_EQ (str[0], 'h');
+}
+
 TEST (TestMyString, TestCopyCtor)
 {
     bool res = false;

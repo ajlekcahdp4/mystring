@@ -54,6 +54,21 @@ class mystring {
         std::strncpy (data_, other.data_, size_);
         return *this;
     }
+
+    char &operator[] (int idx) const
+    {
+        if ( idx >= 0 && idx <= size_ )
+            return data_[idx];
+        if ( idx < 0 && -idx < size_ )
+        {
+            int effective_idx = size_ - (-idx) % size_;
+            return data_[effective_idx];
+        }
+        if ( idx < 0 && -idx == size_ )
+            return data_[0];
+        throw "ERROR: This value of index in mystring::mystring::operator[] makes no sense!";
+        return data_[size_];
+    }
 };
 
 int strcmp (const mystring &str1, const mystring &str2)
