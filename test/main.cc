@@ -226,6 +226,21 @@ TEST (TestMyString, TestCopyAssiggnment)
     ASSERT_TRUE (res);
 }
 
+TEST (TestMyString, TestOperatorPlusEqual)
+{
+    mystring::string str1 = "Hello, ";
+    mystring::string str2 = "world!";
+
+    str1 += str2;
+    ASSERT_STREQ (str1.c_str (), "Hello, world!");
+
+    str1 += "";
+    ASSERT_STREQ (str1.c_str (), "Hello, world!");
+
+    str1 += " !!!!";
+    ASSERT_STREQ (str1.c_str (), "Hello, world! !!!!");
+}
+
 int main (int argc, char *argv[])
 {
     ::testing::InitGoogleTest (&argc, argv);

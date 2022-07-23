@@ -105,6 +105,25 @@ class string {
         throw "ERROR: This value of index in mystring::string::operator[] makes no sense!";
         return data_[size_];
     }
+
+    void operator+= (const string &other)
+    {
+        size_t old_size = size_;
+        size_ += other.size_;
+
+        char *buf = nullptr;
+        if ( size_ >= sizeof (struct large_) )
+            buf = new char[size_];
+        else
+            buf = flex_.small_;   // be carefull
+
+        std::strncpy (buf, data_, old_size);
+        std::strncpy (buf + old_size, other.data_, other.size_);
+
+        if ( old_size >= sizeof (struct large_) )
+            delete[] data_;
+        data_ = buf;
+    }
 };
 
 int strcmp (const string &str1, const string &str2)
