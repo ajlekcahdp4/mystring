@@ -12,25 +12,56 @@ class mystring {
   private:
     char *data_;
     size_type size_;
-    size_type capacity_;
+    union
+    {
+        struct
+        {
+            size_type capacity_;
+            size_type padding_;
+        } large_;
+        char small_[sizeof (large_)];
+    } flex_;
 
   public:
     mystring (const char *data)
     {
-        size_     = std::strlen (data);
-        capacity_ = power_two::nearest_from_above_power_of_two (size_);
-        data_     = new char[capacity_];
+        flex_.large_.capacity_ = 0;
+        flex_.large_.padding_  = 0;
+
+        size_ = std::strlen (data);
+
+        if ( size_ >= sizeof (flex_.large_) )
+        {
+            flex_.large_.capacity_ = power_two::nearest_from_above_power_of_two (size_);
+            data_                  = new char[flex_.large_.capacity_];
+        }
+        else
+            data_ = flex_.small_;
+
         std::strncpy (data_, data, size_);
     }
 
     mystring (const mystring &deststr) : size_ (deststr.size_)
     {
-        capacity_ = power_two::nearest_from_above_power_of_two (size_);
-        data_     = new char[capacity_];
+        flex_.large_.capacity_ = 0;
+        flex_.large_.padding_  = 0;
+
+        if ( size_ >= sizeof (flex_.large_) )
+        {
+            flex_.large_.capacity_ = power_two::nearest_from_above_power_of_two (size_);
+            data_                  = new char[flex_.large_.capacity_];
+        }
+        else
+            data_ = flex_.small_;
+
         std::strncpy (data_, deststr.data_, size_);
     }
 
-    virtual ~mystring () { delete[] data_; }
+    virtual ~mystring ()
+    {
+        if ( size_ >= 16 )
+            delete[] data_;
+    }
 
     size_type size () const { return size_; }
 
@@ -38,16 +69,20 @@ class mystring {
 
     mystring operator= (const mystring &other)
     {
-        if ( other.size_ + 1 >= capacity_ )
+        if ( other.size_ >= sizeof (flex_.large_) )
         {
-            delete[] data_;
-            capacity_ = other.capacity_;
-            data_     = new char[capacity_];
+            if ( size_ >= sizeof (flex_.large_) )
+                delete[] data_;
+
+            flex_.large_.capacity_ = other.flex_.large_.capacity_;
+            data_                  = new char[flex_.large_.capacity_];
         }
         else
         {
-            for ( int i = 0; i < size_; i++ )
-                data_[i] = '\0';
+            if ( size_ >= sizeof (flex_.large_) )
+                delete[] data_;
+
+            data_ = flex_.small_;
         }
 
         size_ = other.size_;
