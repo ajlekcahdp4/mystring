@@ -8,17 +8,18 @@ namespace mystring
 
 using size_type = size_t;
 
+struct large_
+{
+    size_type capacity_;
+    size_type padding_;
+};
 class string {
   private:
     char *data_;
     size_type size_;
     union
     {
-        struct
-        {
-            size_type capacity_;
-            size_type padding_;
-        } large_;
+        struct large_ large_;
         char small_[sizeof (large_)];
     } flex_;
 
@@ -30,7 +31,7 @@ class string {
 
         size_ = std::strlen (data);
 
-        if ( size_ >= sizeof (flex_.large_) )
+        if ( size_ >= sizeof (struct large_) )
         {
             flex_.large_.capacity_ = power_two::nearest_from_above_power_of_two (size_);
             data_                  = new char[flex_.large_.capacity_];
@@ -46,7 +47,7 @@ class string {
         flex_.large_.capacity_ = 0;
         flex_.large_.padding_  = 0;
 
-        if ( size_ >= sizeof (flex_.large_) )
+        if ( size_ >= sizeof (struct large_) )
         {
             flex_.large_.capacity_ = power_two::nearest_from_above_power_of_two (size_);
             data_                  = new char[flex_.large_.capacity_];
@@ -69,9 +70,9 @@ class string {
 
     string operator= (const string &other)
     {
-        if ( other.size_ >= sizeof (flex_.large_) )
+        if ( other.size_ >= sizeof (struct large_) )
         {
-            if ( size_ >= sizeof (flex_.large_) )
+            if ( size_ >= sizeof (struct large_) )
                 delete[] data_;
 
             flex_.large_.capacity_ = other.flex_.large_.capacity_;
@@ -79,7 +80,7 @@ class string {
         }
         else
         {
-            if ( size_ >= sizeof (flex_.large_) )
+            if ( size_ >= sizeof (struct large_) )
                 delete[] data_;
 
             data_ = flex_.small_;
