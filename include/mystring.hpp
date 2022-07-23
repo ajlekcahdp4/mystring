@@ -8,7 +8,7 @@ namespace mystring
 
 using size_type = size_t;
 
-class mystring {
+class string {
   private:
     char *data_;
     size_type size_;
@@ -23,7 +23,7 @@ class mystring {
     } flex_;
 
   public:
-    mystring (const char *data)
+    string (const char *data)
     {
         flex_.large_.capacity_ = 0;
         flex_.large_.padding_  = 0;
@@ -41,7 +41,7 @@ class mystring {
         std::strncpy (data_, data, size_);
     }
 
-    mystring (const mystring &deststr) : size_ (deststr.size_)
+    string (const string &deststr) : size_ (deststr.size_)
     {
         flex_.large_.capacity_ = 0;
         flex_.large_.padding_  = 0;
@@ -57,7 +57,7 @@ class mystring {
         std::strncpy (data_, deststr.data_, size_);
     }
 
-    virtual ~mystring ()
+    virtual ~string ()
     {
         if ( size_ >= 16 )
             delete[] data_;
@@ -67,7 +67,7 @@ class mystring {
 
     char *c_str () const { return data_; }
 
-    mystring operator= (const mystring &other)
+    string operator= (const string &other)
     {
         if ( other.size_ >= sizeof (flex_.large_) )
         {
@@ -101,12 +101,12 @@ class mystring {
         }
         if ( idx < 0 && -idx == size_ )
             return data_[0];
-        throw "ERROR: This value of index in mystring::mystring::operator[] makes no sense!";
+        throw "ERROR: This value of index in mystring::string::operator[] makes no sense!";
         return data_[size_];
     }
 };
 
-int strcmp (const mystring &str1, const mystring &str2)
+int strcmp (const string &str1, const string &str2)
 {
     int size_diff    = str1.size () - str2.size ();
     int content_diff = std::strncmp (str1.c_str (), str2.c_str (), str1.size ());
@@ -116,32 +116,32 @@ int strcmp (const mystring &str1, const mystring &str2)
     return content_diff;
 }
 
-bool operator== (const mystring &str1, const mystring &str2) { return !strcmp (str1, str2); }
+bool operator== (const string &str1, const string &str2) { return !strcmp (str1, str2); }
 
-bool operator> (const mystring &str1, const mystring &str2)
+bool operator> (const string &str1, const string &str2)
 {
     int res = strcmp (str1, str2);
     return (res > 0);
 }
 
-bool operator>= (const mystring &str1, const mystring &str2)
+bool operator>= (const string &str1, const string &str2)
 {
     int res = strcmp (str1, str2);
     return (res >= 0);
 }
 
-bool operator< (const mystring &str1, const mystring &str2)
+bool operator< (const string &str1, const string &str2)
 {
     int res = strcmp (str1, str2);
     return (res < 0);
 }
 
-bool operator<= (const mystring &str1, const mystring &str2)
+bool operator<= (const string &str1, const string &str2)
 {
     int res = strcmp (str1, str2);
     return (res <= 0);
 }
 
-bool operator!= (const mystring &str1, const mystring str2) { return !(str1 == str2); }
+bool operator!= (const string &str1, const string str2) { return !(str1 == str2); }
 
 }   // namespace mystring

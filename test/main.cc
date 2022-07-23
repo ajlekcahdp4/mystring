@@ -15,14 +15,14 @@ TEST (TestMyString, TestInit)
     size_t cstr_len_1 = std::strlen (cstr1);
     size_t cstr_len_2 = std::strlen (cstr2);
 
-    mystring::mystring str1 (cstr1);
+    mystring::string str1 (cstr1);
     res = cstr_len_1 - str1.size ();
     ASSERT_EQ (res, 0);
 
     res = std::strncmp (cstr1, str1.c_str (), cstr_len_1);
     ASSERT_EQ (res, 0);
 
-    mystring::mystring str2 (cstr2);
+    mystring::string str2 (cstr2);
     res = cstr_len_2 - str2.size ();
     ASSERT_EQ (res, 0);
 
@@ -33,10 +33,10 @@ TEST (TestMyString, TestInit)
 TEST (TestMyString, TestStrCmp)
 {
     int res = 0;
-    mystring::mystring str1 ("Hello, ");
-    mystring::mystring str2 ("world!");
-    mystring::mystring str3 ("world! ");
-    mystring::mystring str4 ("");
+    mystring::string str1 ("Hello, ");
+    mystring::string str2 ("world!");
+    mystring::string str3 ("world! ");
+    mystring::string str4 ("");
 
     res = mystring::strcmp (str1, str1);
     ASSERT_EQ (res, 0);
@@ -60,10 +60,10 @@ TEST (TestMyString, TestStrCmp)
 TEST (TestMyString, TestOperatorEqEq)
 {
     bool res = false;
-    mystring::mystring str1 ("Hello, ");
-    mystring::mystring str2 ("world!");
-    mystring::mystring str3 ("world! ");
-    mystring::mystring str4 ("");
+    mystring::string str1 ("Hello, ");
+    mystring::string str2 ("world!");
+    mystring::string str3 ("world! ");
+    mystring::string str4 ("");
 
     res = (str1 == str1);
     ASSERT_TRUE (res);
@@ -83,12 +83,12 @@ TEST (TestMyString, TestOperatorEqEq)
 TEST (TestMyString, TestInequalities)
 {
     bool res = false;
-    mystring::mystring str1 ("Hello, ");
-    mystring::mystring str2 ("world!");
-    mystring::mystring str3 ("world! ");
-    mystring::mystring str4 ("");
-    mystring::mystring str5 ("bb");
-    mystring::mystring str6 ("aaaa");
+    mystring::string str1 ("Hello, ");
+    mystring::string str2 ("world!");
+    mystring::string str3 ("world! ");
+    mystring::string str4 ("");
+    mystring::string str5 ("bb");
+    mystring::string str6 ("aaaa");
     // operator<
     res = (str2 < str3);
     ASSERT_TRUE (res);
@@ -173,7 +173,7 @@ TEST (TestMyString, TestInequalities)
 
 TEST (TestMyString, TestOperatorSqrBrackets)
 {
-    mystring::mystring str = "Hello, World!";
+    mystring::string str = "Hello, World!";
 
     char &ref1 = str[0];
     ASSERT_EQ (ref1, 'H');
@@ -197,14 +197,14 @@ TEST (TestMyString, TestOperatorSqrBrackets)
 TEST (TestMyString, TestCopyCtor)
 {
     bool res = false;
-    mystring::mystring str1 ("Hello, world!");
-    mystring::mystring str2 (str1);
+    mystring::string str1 ("Hello, world!");
+    mystring::string str2 (str1);
 
     res = (str1 == str2);
     ASSERT_TRUE (res);
 
-    mystring::mystring str3 ("");
-    mystring::mystring str4 (str3);
+    mystring::string str3 ("");
+    mystring::string str4 (str3);
 
     res = (str3 == str4);
     ASSERT_TRUE (res);
@@ -213,14 +213,14 @@ TEST (TestMyString, TestCopyCtor)
 TEST (TestMyString, TestCopyAssiggnment)
 {
     bool res = false;
-    mystring::mystring str1 ("Hello, world!");
-    mystring::mystring str2 ("Other string");
+    mystring::string str1 ("Hello, world!");
+    mystring::string str2 ("Other string");
 
     str2 = str1;
     res  = (str2 == str1);
     ASSERT_TRUE (res);
 
-    mystring::mystring str3 ("");
+    mystring::string str3 ("");
     str2 = str3;
     res  = (str2 == str3);
     ASSERT_TRUE (res);
