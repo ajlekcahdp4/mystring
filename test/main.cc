@@ -184,14 +184,24 @@ TEST (TestMyString, TestOperatorSqrBrackets)
     char &ref3 = str[13];
     ASSERT_EQ (ref3, '\0');
 
-    char &ref4 = str[-1];
-    ASSERT_EQ (ref4, '!');
-
-    char &ref5 = str[-13];
-    ASSERT_EQ (ref5, 'H');
-
     str[0] = 'h';
-    ASSERT_EQ (str[0], 'h');
+    ASSERT_STREQ (str.c_str (), "hello, World!");
+}
+
+TEST (TestMyString, TestAt)
+{
+    mystring::string str = "Hello, World!";
+
+    char &ref1 = str.at (0);
+    ASSERT_EQ (ref1, 'H');
+
+    char &ref2 = str.at (12);
+    ASSERT_EQ (ref2, '!');
+
+    str.at (0) = 'h';
+    ASSERT_STREQ (str.c_str (), "hello, World!");
+
+    ASSERT_ANY_THROW (char &ref3 = str.at (str.size ()));
 }
 
 TEST (TestMyString, TestCopyCtor)

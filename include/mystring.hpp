@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstring>
+#include <stdexcept>
 
 #include "pow_two.hpp"
 namespace mystring
@@ -88,22 +89,18 @@ class string {
 
         size_ = other.size_;
         std::strncpy (data_, other.data_, size_);
+
         return *this;
     }
 
-    char &operator[] (int idx) const
+    // if pos > size(), the behavior is undefined
+    char &operator[] (size_type pos) { return data_[pos]; }
+
+    char &at (size_type pos)
     {
-        if ( idx >= 0 && idx <= size_ )
-            return data_[idx];
-        if ( idx < 0 && -idx < size_ )
-        {
-            int effective_idx = size_ - (-idx) % size_;
-            return data_[effective_idx];
-        }
-        if ( idx < 0 && -idx == size_ )
-            return data_[0];
-        throw "ERROR: This value of index in mystring::string::operator[] makes no sense!";
-        return data_[size_];
+        if ( pos >= size_ )
+            throw std::out_of_range ("out of range at at ()");
+        return data_[pos];
     }
 
     void operator+= (const string &other)
